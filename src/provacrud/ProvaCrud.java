@@ -10,7 +10,10 @@ public class ProvaCrud {
     public static void main(String[] args) {
 
         ArrayList<Produto> listaProdutos = new ArrayList<>();
-        String etiqueta;
+    
+        
+        
+        
         String resp = "";
         while (!resp.equals("6")) {
             resp = JOptionPane.showInputDialog("Bem vindo a loja da JôJoias\n"
@@ -55,12 +58,20 @@ public class ProvaCrud {
 
         String nomeProduto = JOptionPane.showInputDialog("Digite o nome: ");
         int quantidadeProduto = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade: "));
-        int reservaProduto = Integer.parseInt(JOptionPane.showInputDialog("Digite a reserva "));
-        double valorProduto = Double.parseDouble(JOptionPane.showInputDialog("Digite o valor "));
+        int reservaProduto = Integer.parseInt(JOptionPane.showInputDialog("Digite a reserva: "));
+        double valorProduto = Double.parseDouble(JOptionPane.showInputDialog("Digite o valor: "));
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite a identificação do produto com um numero: "));
 
-        Produto p = new Produto(nomeProduto, valorProduto, quantidadeProduto, reservaProduto);
+
+        Produto p = new Produto(nomeProduto, valorProduto, quantidadeProduto, reservaProduto, id);
         listaProdutos.add(p);
 
+        for (int i = 0; i < listaProdutos.size(); i++) {
+            if (listaProdutos.get(i).id == listaProdutos.get(i).id && listaProdutos.get(i).nomeProduto == listaProdutos.get(i).nomeProduto) {
+                id++;
+            }
+
+        }
     }
 
     public static void consultar(ArrayList<Produto> listaProdutos) {
@@ -141,19 +152,23 @@ public class ProvaCrud {
         for (int i = 0; i < listaProdutos.size(); i++) {
             if (perguntaEestoque.equals(listaProdutos.get(i).nomeProduto)) {
 
-                String perguntaOp = JOptionPane.showInputDialog("Deseja adicionar ou tirar a quantidade de um produto?\n 1- Adicionar\n 2- Retirar\n 3- Dar entrada em produto com o mesmo nome:\n");
+                String perguntaOp = JOptionPane.showInputDialog("Deseja adicionar ou tirar a quantidade de um produto?\n 1- Adicionar\n 2- Retirar\n");
 
                 if (listaProdutos.get(i).quantidadeProduto == 0) {
                     JOptionPane.showMessageDialog(null, "Sem unidades disponiveis");
 
                 }
 
-                if (perguntaOp.equals(1)) {
+                if (perguntaOp.equals("1")) {
                     int qtdAdd;
-                    int soma;
 
                     qtdAdd = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade para adicionar ao produto"));
-                    soma = qtdAdd + listaProdutos.get(i).quantidadeProduto;
+                    listaProdutos.get(i).quantidadeProduto += qtdAdd;
+
+                } else if (perguntaOp.equals("2")) {
+                    int dim;
+                    dim = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade para adicionar ao produto"));
+                    listaProdutos.get(i).quantidadeProduto -= dim;
 
                 }
 
@@ -169,20 +184,24 @@ public class ProvaCrud {
         public double valorProduto;
         public int quantidadeProduto;
         public int reservado;
+        public int id;
 
-        public Produto(String nomeProduto, double valorProduto, int quantidadeProduto, int reservado) {
+        public Produto(String nomeProduto, double valorProduto, int quantidadeProduto, int reservado, int id) {
             this.nomeProduto = nomeProduto;
             this.valorProduto = valorProduto;
             this.reservado = reservado;
             this.quantidadeProduto = quantidadeProduto;
+            this.id = id;
         }
 
         public String show() {
             return "Nome: " + this.nomeProduto + "\n"
                     + "Valor: " + this.valorProduto + "\n"
                     + "Quantidade: " + this.quantidadeProduto + "\n"
-                    + "reserva: " + this.reservado + "\n";
-
+                    + "reserva: " + this.reservado + "\n"
+                    + "id: " + this.id + "\n"
+                    + "";
+            
         }
 
     }
